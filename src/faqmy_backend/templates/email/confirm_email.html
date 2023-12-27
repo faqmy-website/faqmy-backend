@@ -1,0 +1,5 @@
+{% from "email/_includes.html" import get_confirm_email with context %}
+
+<p>Hello! Thank you for signing up! Please click below to confirm your email.</p>
+
+<p><a href="{{ get_confirm_email(token) }}">Click here to confirm your email address</a></p>

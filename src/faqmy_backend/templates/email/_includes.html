@@ -1,0 +1,10 @@
+{#  Omit trailing slash here #}
+{%- macro get_frontend_url() -%}https://app.faqmy.website{%- endmacro -%}
+
+{%- macro get_reset_password_url(token) -%}
+    {{ get_frontend_url() }}/reset-password/{{ token }}
+{%- endmacro -%}
+
+{%- macro get_confirm_email(token) -%}
+    {{ get_frontend_url() }}/verify-email/{{ token }}
+{%- endmacro -%}

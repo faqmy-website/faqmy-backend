@@ -1,0 +1,56 @@
+[tool.poetry]
+name = "faqmy-backend"
+version = "0.1.0"
+description = ""
+authors = [
+    "Mikhail Porokhovnichenko <marazmiki@gmail.com>"
+]
+readme = "README.md"
+packages = [{include = "faqmy_backend", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+sqlalchemy = "^2.0.4"
+alembic = "^1.9.4"
+shortuuid = "^1.0.11"
+fastapi-users = {extras = ["sqlalchemy"], version = "^10.4.0"}
+asyncpg = "^0.27.0"
+yarl = "^1.8.2"
+gunicorn = "^20.1.0"
+uvicorn = "^0.20.0"
+aiosmtplib = "^2.0.1"
+jinja2 = "^3.1.2"
+httpx = "^0.23.3"
+async-stripe = "^5.4.0"
+pytz = "^2023.3"
+
+
+[tool.poetry.group.dev.dependencies]
+testcontainers = "^3.7.1"
+pytest = "^7.2.1"
+psycopg2-binary = "^2.9.5"
+pytest-asyncio = "^0.20.3"
+black = "^23.1.0"
+isort = "^5.12.0"
+pytest-httpx = "^0.21.3"
+pytest-cov = "^4.0.0"
+
+[tool.black]
+line-length    = 79
+target-version = ["py311"]
+force_exclude  = "alembic/"
+
+[tool.isort]
+py_version = 311
+profile     = "black"
+src_paths   = ["src", "tests"]
+skip        = ["alembic/"]
+line_length = 79
+atomic      =  true
+
+[tool.coverage.html]
+skip_covered = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

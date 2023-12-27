@@ -1,0 +1,52 @@
+version: 3
+
+vars:
+  DOCKER_IMAGE: faqmy-backend:latest
+
+
+tasks:
+  default:
+    desc: "Default task"
+    cmds:
+      - task -l
+
+  fmt:
+    desc: "Apply black and isort formatters to the code"
+    cmds:
+      - poetry run black . &&  isort .
+
+  lint:
+    desc: "Check if the code some format issues"
+    cmds:
+      - poetry run black --check . && isort --check .
+
+  dev:
+    desc: "Run a server instance"
+    cmds:
+      - poetry run python -m faqmy_backend
+
+  gunicorn:
+    desc: "Run the application with gunicorn"
+    cmds:
+      - poetry run gunicorn faqmy_backend.app.asgi:app -k uvicorn.workers.UvicornWorker --access-logfile=-
+
+  test:
+    desc: "Run tests"
+    cmds:
+      - poetry run pytest {{.CLI_ARGS}}
+
+  cov:
+    desc: "Run tests with coverage report"
+    cmds:
+      - poetry run pytest --cov=src --cov=tests --cov-report=html --cov-report=term:skip-covered {{.CLI_ARGS}}
+
+
+  docker:
+    desc: "Build docker image"
+    cmds:
+      - docker build -t "{{.DOCKER_IMAGE}}" .
+
+  docker-run:
+    desc: "Run the application inside a docker container"
+    cmds:
+      - docker run --rm -it --env-file=.env -p 8000:8000  {{.DOCKER_IMAGE}}
